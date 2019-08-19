@@ -67,6 +67,10 @@ Applications and operating systems can use the methods defined here
 to get the information from resolvers in order to make choices about
 how to send future queries to those resolvers.
 
+There is a GitHub repo for this draft where pull requests
+can be issued: https://github.com/DNSOP/draft-ietf-dnsop-resolver-information
+However, starting issues on the WG mailing list is preferred.
+
 --- middle
 
 # Introduction
