@@ -1,7 +1,7 @@
 ---
 title: DNS Resolver Information Self-publication
 abbrev: Resolver Information
-docname: draft-sah-resolver-information
+docname: draft-ietf-dnsop-resolver-information
 
 stand_alone: true
 

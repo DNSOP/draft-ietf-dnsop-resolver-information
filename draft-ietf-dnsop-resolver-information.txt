@@ -11,7 +11,7 @@ Expires: February 20, 2020                                    P. Hoffman
 
 
                DNS Resolver Information Self-publication
-                 draft-ietf-dnsop-resolver-information
+                draft-ietf-dnsop-resolver-information-00
 
 Abstract
 
