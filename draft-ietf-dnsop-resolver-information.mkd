@@ -157,8 +157,8 @@ Any query for the RESINFO RRtype that is not in &lt;reverse-ip&gt;.{in-addr,ip6}
 subdomain of &lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN is meaningless and MUST result in a
 NODATA or NXDOMAIN response.
 Resolvers would not need any special code to meet this requirement; they
-only need code to handle the RESINFO RRtype that is not in
-&lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN or a subdomain of &lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN .
+only need code to handle the RESINFO RRtype that is  in
+&lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN or a subdomain of &lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN.
 
 
 # Retrieving Resolver Information by Well-Known URI {#by-uri}
