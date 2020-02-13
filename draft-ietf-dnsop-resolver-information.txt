@@ -5,13 +5,13 @@
 Network Working Group                                            P. Sood
 Internet-Draft                                                    Google
 Intended status: Standards Track                               R. Arends
-Expires: February 20, 2020                                    P. Hoffman
+Expires: August 14, 2020                                      P. Hoffman
                                                                    ICANN
-                                                         August 19, 2019
+                                                       February 11, 2020
 
 
                DNS Resolver Information Self-publication
-                draft-ietf-dnsop-resolver-information-00
+                draft-ietf-dnsop-resolver-information-01
 
 Abstract
 
@@ -24,6 +24,11 @@ Abstract
    can use the methods defined here to get the information from
    resolvers in order to make choices about how to send future queries
    to those resolvers.
+
+   There is a GitHub repo for this draft where pull requests can be
+   issued: https://github.com/DNSOP/draft-ietf-dnsop-resolver-
+   information However, starting issues on the WG mailing list is
+   preferred.
 
 Status of This Memo
 
@@ -40,24 +45,27 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on February 20, 2020.
+   This Internet-Draft will expire on August 14, 2020.
+
+
+
+
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 1]
+
+Internet-Draft            Resolver Information             February 2020
+
 
 Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
+   Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (https://trustee.ietf.org/license-info) in effect on the date of
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 1]
-
-Internet-Draft            Resolver Information               August 2019
-
-
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -76,7 +84,7 @@ Table of Contents
      4.2.  Example . . . . . . . . . . . . . . . . . . . . . . . . .   6
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
      5.1.  RESINFO RRtype  . . . . . . . . . . . . . . . . . . . . .   6
-     5.2.  Registry for DNS Resolver Information . . . . . . . . . .   6
+     5.2.  Registry for DNS Resolver Information . . . . . . . . . .   7
      5.3.  resolver-info Well-known URI  . . . . . . . . . . . . . .   7
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
@@ -97,6 +105,15 @@ Table of Contents
    resolvers need a way to get information from recursive resolvers
    about features that might affect the communication.
 
+
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 2]
+
+Internet-Draft            Resolver Information             February 2020
+
+
    This document specifies methods for stub resolvers to ask recursive
    resolvers for such information.  In short, a new RRtype is defined
    for stub resolvers to query using the DNS, and a new well-known URI
@@ -105,15 +122,6 @@ Table of Contents
    The response from either method is the same: a JSON object.  The JSON
    object MUST use the I-JSON message format defined in [RFC7493].  Note
    that [RFC7493] was based on RFC 7159, but RFC 7159 was replaced by
-
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 2]
-
-Internet-Draft            Resolver Information               August 2019
-
-
    [RFC8259].  Requiring the use of I-JSON instead of more general JSON
    format greatly increases the likelihood of interoperability.
 
@@ -154,6 +162,14 @@ Internet-Draft            Resolver Information               August 2019
    In this section, "<reverse-ip>.{in-addr,ip6}.arpa" is the domain name
    associated with the reverse lookup of an IP address of the resolver
    (resolvers can have multiple addresses).  For example, if the
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 3]
+
+Internet-Draft            Resolver Information             February 2020
+
+
    resolver is at 192.0.2.1, the query would be 1.2.0.192.in-
    addr.arpa/IN/RESINFO.
 
@@ -162,14 +178,6 @@ Internet-Draft            Resolver Information               August 2019
    and responds with its own RESINFO data in the Answer section.  The
    resolver can generate this reply with special code to capture queries
    for these types of addresses; if the resolver can be configured to
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 3]
-
-Internet-Draft            Resolver Information               August 2019
-
-
    also be authoritative for some zones, it can use that configuration
    to actually be authoritative for the addresses on which it responds.
 
@@ -185,9 +193,9 @@ Internet-Draft            Resolver Information               August 2019
    addr,ip6}.arpa/IN or a subdomain of <reverse-ip>.{in-addr,ip6}.arpa/
    IN is meaningless and MUST result in a NODATA or NXDOMAIN response.
    Resolvers would not need any special code to meet this requirement;
-   they only need code to handle the RESINFO RRtype that is not in
-   <reverse-ip>.{in-addr,ip6}.arpa/IN or a subdomain of <reverse-
-   ip>.{in-addr,ip6}.arpa/IN .
+   they only need code to handle the RESINFO RRtype that is in <reverse-
+   ip>.{in-addr,ip6}.arpa/IN or a subdomain of <reverse-ip>.{in-
+   addr,ip6}.arpa/IN.
 
 3.  Retrieving Resolver Information by Well-Known URI
 
@@ -210,6 +218,14 @@ Internet-Draft            Resolver Information               August 2019
    This uses the ".well-known" URI mechanism defined in [RFC8615].  The
    contents of the response to this query is defined in Section 4.
 
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 4]
+
+Internet-Draft            Resolver Information             February 2020
+
+
    A resolver that uses this protocol to publish its information SHOULD,
    if possible, have a TLS certificate whose subject identifiers are any
    IP address that the resolver is available on, as well as any domain
@@ -217,15 +233,6 @@ Internet-Draft            Resolver Information               August 2019
    that this document is published, getting IP addresses in TLS
    certificates is possible, but there are only a few widely-trusted CAs
    that issue such certificates.  [I-D.ietf-acme-ip] describes a new
-
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 4]
-
-Internet-Draft            Resolver Information               August 2019
-
-
    protocol that may cause IP address certificates to become more
    common.
 
@@ -266,6 +273,15 @@ Internet-Draft            Resolver Information               August 2019
    and hyphens (that is, Unicode characters U+0061 through 007A, U+0030
    through U+0039, and U+002D), and MUST be 63 characters or shorter.
    As defined in Section 5.2, the IANA registry will not register names
+
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 5]
+
+Internet-Draft            Resolver Information             February 2020
+
+
    that begin with "temp-", so these names can be used freely by any
    implementer.
 
@@ -274,13 +290,6 @@ Internet-Draft            Resolver Information               August 2019
 
    This document only defines one element that can returned:
    "inventory".  All other elements will be defined in other documents.
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 5]
-
-Internet-Draft            Resolver Information               August 2019
-
 
 4.1.  The "inventory" name
 
@@ -321,6 +330,14 @@ Internet-Draft            Resolver Information               August 2019
    Meaning: Information self-published by a resolver as an I-JSON (RFC
    7493) object
 
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 6]
+
+Internet-Draft            Resolver Information             February 2020
+
+
    Reference: This document
 
 5.2.  Registry for DNS Resolver Information
@@ -329,14 +346,6 @@ Internet-Draft            Resolver Information               August 2019
    that will contain definitions of the names that can be used with the
    protocols defined in this document.  The registration procedure is by
    Expert Review and Specification Required, as defined in [RFC8126].
-
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 6]
-
-Internet-Draft            Resolver Information               August 2019
-
 
    The specification that is required for registration can be either an
    Internet-Draft or an RFC.  The reviewer for this registry is
@@ -377,6 +386,14 @@ Internet-Draft            Resolver Information               August 2019
    (DoT) [RFC7858] or DNS-over-HTTPS (DoH) [RFC8484], or unless the
    <reverse-ip>.{in-addr,ip6}.arpa zone is signed with DNSSEC, the
    response is susceptible to forgery.  Stubs and resolvers SHOULD use
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 7]
+
+Internet-Draft            Resolver Information             February 2020
+
+
    normal DNS methods for avoiding forgery such as query ID
    randomization and source port randomization.  A stub resolver will
    know if it is using DoT or DoH, and if it is using DoT it will know
@@ -385,15 +402,6 @@ Internet-Draft            Resolver Information               August 2019
    An application that is using an operating system API to send queries
    for <reverse-ip>.{in-addr,ip6}.arpa/IN/RESINFO or a subdomain will
    only know if query went over authenticated DoT or DoH if the API
-
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 7]
-
-Internet-Draft            Resolver Information               August 2019
-
-
    supports returning that authentication information.  Currently, no
    common APIs support that type of response.
 
@@ -427,12 +435,20 @@ Internet-Draft            Resolver Information               August 2019
 
    [I-D.ietf-acme-ip]
               Shoemaker, R., "ACME IP Identifier Validation Extension",
-              draft-ietf-acme-ip-06 (work in progress), May 2019.
+              draft-ietf-acme-ip-08 (work in progress), October 2019.
 
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
+
+
+
+
+Sood, et al.             Expires August 14, 2020                [Page 8]
+
+Internet-Draft            Resolver Information             February 2020
+
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
@@ -442,13 +458,6 @@ Internet-Draft            Resolver Information               August 2019
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 8]
-
-Internet-Draft            Resolver Information               August 2019
-
 
    [RFC8615]  Nottingham, M., "Well-Known Uniform Resource Identifiers
               (URIs)", RFC 8615, DOI 10.17487/RFC8615, May 2019,
@@ -492,13 +501,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Sood, et al.            Expires February 20, 2020               [Page 9]
+Sood, et al.             Expires August 14, 2020                [Page 9]

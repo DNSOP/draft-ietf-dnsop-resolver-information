@@ -101,7 +101,12 @@ specify that information and the format that it comes in.
 
 It is important to note that the protocol defined here is only for
 recursive resolvers, not for authoritative servers.
-Authoritative servers MUST NOT answer queries that are defined in this protocol.
+
+Because the information returned in this protocol only applies to recursive 
+resolvers, servers that are acting as both authoritative servers and recursive 
+resolvers MUST only answer queries that are intended for the recursive 
+resolver portion of the server.
+Authoritative-only servers MUST NOT answer queries that are defined in this protocol.
 (It is likely that a later protocol will allow authoritative servers
 to give information in a method similar to the one described in this document.)
 
@@ -157,7 +162,7 @@ Any query for the RESINFO RRtype that is not in &lt;reverse-ip&gt;.{in-addr,ip6}
 subdomain of &lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN is meaningless and MUST result in a
 NODATA or NXDOMAIN response.
 Resolvers would not need any special code to meet this requirement; they
-only need code to handle the RESINFO RRtype that is  in
+only need code to handle the RESINFO RRtype that is in
 &lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN or a subdomain of &lt;reverse-ip&gt;.{in-addr,ip6}.arpa/IN.
 
 
